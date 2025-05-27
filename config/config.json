@@ -1,4 +1,13 @@
+
 {
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "postgres",
+    "password": "postgres",
+    "name": "movie_rental",
+    "sslmode": "disable"
+  },
   "server": {
     "port": "8081"
   }
