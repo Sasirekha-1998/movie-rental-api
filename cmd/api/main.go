@@ -48,6 +48,19 @@ func main() {
 	movieController := controllers.NewMovieController(movieService)
 	router.GET("/movies/filter", movieController.GetFilteredMovies)
 
+	//story4
+	router.GET("/movie/view", movieController.GetMovieByID)
+
+	//story5
+	cartRepo := repositories.NewCartRepository(db)
+	cartService := services.NewCartService(cartRepo)
+	cartController := controllers.NewCartController(cartService)
+
+	router.POST("/cart", cartController.AddToCart)
+
+	//story6
+	router.GET("/cart", cartController.GetCart)
+
 	log.Println("✅ Server running on :" + port)
 	router.Run(":" + port) // Use the port from the config
 }

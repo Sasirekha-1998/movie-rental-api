@@ -77,3 +77,15 @@ func (r *MovieRepository) GetMoviesByFilters(filters map[string]string) ([]model
 	}
 	return movies, nil
 }
+
+func (r *MovieRepository) GetMovieByID(id string) (*models.Movie, error) {
+	query := "SELECT id, title, year, imdb_id, type, poster, description, genre, language, rating, duration, actors FROM movies WHERE id = $1"
+	row := r.DB.QueryRow(query, id)
+
+	var m models.Movie
+	err := row.Scan(&m.ID, &m.Title, &m.Year, &m.ImdbID, &m.Type, &m.Poster, &m.Description, &m.Genre, &m.Language, &m.Rating, &m.Duration, &m.Actors)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}

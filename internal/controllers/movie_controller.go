@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"database/sql"
+	"errors"
 	"movie-rental-api/internal/services"
 	"net/http"
 
@@ -35,4 +37,18 @@ func (mc *MovieController) GetFilteredMovies(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, movies)
+}
+
+func (mc *MovieController) GetMovieByID(c *gin.Context) {
+	id := c.Query("id")
+	movie, err := mc.Service.GetMovieByID(id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Movie not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch movie details"})
+		}
+		return
+	}
+	c.JSON(http.StatusOK, movie)
 }

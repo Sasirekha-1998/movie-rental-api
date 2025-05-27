@@ -33,3 +33,7 @@ func GetAllMovies(c *gin.Context) {
 func (s *MovieService) GetMoviesByFilters(filters map[string]string) ([]models.Movie, error) {
 	return s.Repo.GetMoviesByFilters(filters)
 }
+
+func (s *MovieService) GetMovieByID(id string) (*models.Movie, error) {
+	return s.Repo.GetMovieByID(id)
+}
